@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@grpc/grpc-js": "^1.9.14",
+    "@grpc/proto-loader": "^0.7.10",
     "@types/node": "^20.11.5",
-    "grpc": "^1.24.11",
     "grpc-tools": "^1.12.4",
+    "ts-proto": "^1.167.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
