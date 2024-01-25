@@ -1,32 +1,34 @@
 package main
 
 import (
-	"context"
-	"log"
-	"net"
+    "context"
+    "log"
+    "net"
 
-	"google.golang.org/grpc"
-	pb "block/protocol"
+    "google.golang.org/grpc"
+    pb "block/protocol"
 )
 
-type server struct{}
+type server struct {
+    pb.UnimplementedBlockchainServiceServer
+}
 
-func (s *server) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
-	name := req.GetName()
-	message := "안녕하세요, " + name + "님! Go에서 보낸 메시지입니다."
-	return &pb.HelloResponse{Message: message}, nil
+func (s *server) AddBlock(ctx context.Context, in *pb.BlockRequest) (*pb.BlockResponse, error) {
+    // 블록 추가 로직 구현
+    log.Printf("Received: %v", in.GetData())
+    // 블록 추가 성공 시
+    return &pb.BlockResponse{Status: "Success"}, nil
 }
 
 func main() {
-	listener, err := net.Listen("tcp", ":50051")
-	if err != nil {
-		log.Fatalf("리스닝 실패: %v", err)
-	}
-
-	srv := grpc.NewServer()
-
-	log.Println("Go gRPC 서버가 50051 포트에서 실행 중입니다...")
-	if err := srv.Serve(listener); err != nil {
-		log.Fatalf("서비스 실패: %v", err)
-	}
+    lis, err := net.Listen("tcp", ":50051")
+    if err != nil {
+        log.Fatalf("failed to listen: %v", err)
+    }
+    s := grpc.NewServer()
+    pb.RegisterBlockchainServiceServer(s, &server{})
+    log.Printf("Server listening at %v", lis.Addr())
+    if err := s.Serve(lis); err != nil {
+        log.Fatalf("failed to serve: %v", err)
+    }
 }

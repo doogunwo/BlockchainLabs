@@ -1,0 +1,20 @@
+syntax = "proto3";
+package blockchain;
+
+// 블록체인 서비스 정의
+service BlockchainService {
+  // 블록 추가
+  rpc AddBlock (BlockRequest) returns (BlockResponse);
+}
+
+// 블록 요청 메시지
+message BlockRequest {
+  string data = 1;
+}
+
+// 블록 응답 메시지
+message BlockResponse {
+  string status = 1;
+}
+
+
