@@ -14,6 +14,7 @@
     "@types/node": "^20.11.5",
     "grpc_tools_node_protoc_ts": "^5.3.3",
     "grpc-tools": "^1.12.4",
+    "level": "^8.0.0",
     "ts-proto": "^1.167.0",
     "typescript": "^5.3.3"
   },
