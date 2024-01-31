@@ -1,3 +1,4 @@
-const net = require("net");
-const port = 6000;
-const peerHost = process.argv[2];
+import {BlockChain} from "@src/core";
+import express, {Reqeust, Response} from 'express';
+
+const app 
