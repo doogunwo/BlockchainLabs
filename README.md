@@ -1,2 +1,2 @@
-# BlobBlock
-BlockChain 
+블록체인 생태계를 리서치하는 리포지토리입니다.
+
