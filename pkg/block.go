@@ -2,17 +2,11 @@ package main
 
 import (
 	"bytes"
-	"encoding/binary"
 	"time"
+	"encoding/gob"
 )
 
-type Block struct {
-	Timestamp     int64
-	Data          []byte
-	prevBlockHash []byte
-	Hash          []byte
-	Nonce         int
-}
+
 
 func NewBlock(data string, prevBlockHash []byte) *Block {
 	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, 0}
@@ -24,9 +18,25 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 	return block
 }
 
-func IntToHex(num int64) []byte {
-	buff := new(bytes.Buffer)
-	binary.Write(buff, binary.BigEndian, num)
+func (b *Block)  Serialize() []byte {
+	var result bytes.Buffer
 
-	return buff.Bytes()
+	encoder := gob.NewEncoder(&result)
+	err := encoder.Encode(b)
+	if err != nil {
+		return nil
+	}
+	return result.Bytes()
+}
+
+func DeserializeBlock(d []byte) *Block {
+	var block Block
+
+	decoder := gob.NewDecoder(bytes.NewReader(d))
+	err:= decoder.Decode(&block)
+	if err != nil {
+		return nil
+	}
+
+	return &block
 }
